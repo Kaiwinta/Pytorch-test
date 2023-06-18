@@ -1,5 +1,11 @@
 import torch
 
+"""
+    This code is all the Basis about Tensor
+    The code is divised in a few chapter that are the different function
+    I documented the most i can in both languages but if anything is false plese provide me a correction
+"""
+
 def Initialisation():
 
     #A tensor is a neested list with many dimention it can be more than 3
