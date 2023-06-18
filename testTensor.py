@@ -59,16 +59,66 @@ def Slicing():
     print(x[1,1].item())    #Affiche la valeur réelle, ne marche qu'avec un élément
     print("==================\n")
 
-#Reshape_Tensor():
+def Reshape_Tensor():
 
-x = torch.rand(4,4)
-y =x.view(16)           #La fonction .view permet de mettre les élément dans une autre forme
-                        #Le nombre d'élément total doit être conservé
-z = x.view(8,2)         #Nombre total conservé et mise en page encore différente
-                        #D'abord l'on lis toute la première ligne puis toute la deuxième
+    x = torch.rand(4,4)
 
-print("\n==================")
-print(x)
-print(y)
-print(z)
-print("==================\n")
+    y =x.view(16)           #La fonction .view permet de mettre les élément dans une autre forme
+                            #Le nombre d'élément total doit être conservé
+
+    z = x.view(8,2)         #Nombre total conservé et mise en page encore différente
+                            #D'abord l'on lis toute la première ligne puis toute la deuxième
+
+    t = x.viex(-1,8)        #L'on choisi une seule dimension la deuxième se fera automatiquemeny
+                            #Permet de ne pas perdre de donnée et d'avoir la bonne taille 
+
+    print("\n==================")
+    print(x)
+    print(y) 
+    print(z)
+    print(t)
+    print("==================\n")
+
+def Numpy_to_Tensor():
+
+    import numpy as np
+
+    a = torch.ones(5,5)
+    print(a)
+    b = a.numpy()           #Convertis en un numpy array
+    print(b)
+
+    #Attention, si l'on est sur le CPU, modifier le tensor modifiera l'array car même adresse mémoire et vice versa
+
+    a = np.ones(5)
+    b = torch.from_numpy(a) #Convertis en un Tensor
+    print(a)
+    print(b)
+
+    #Attention, si l'on est sur le CPU, modifier le tensor modifiera l'array car même adresse mémoire et vice versa
+
+    #Permet de créer un tensor sur la carte graphique
+    #Avantage: Calcul plus rapide et pas de partage d'adresse mémoire avec des numpy arrays
+    #Desavantage : L'on ne peut pas utiliser numpy sur la gpu
+    if torch.cuda.is_available():
+        device = torch.device("cuda")       #L'on définis cuda comme device
+        x = torch.ones(5, device = device)  #Créer un tensor sur le Gpu
+
+        print("==============")
+        print(b.device)                     #Affiche la device de b (cpu)
+        print(x.device)                     #Affiche la device de x (cuda:0)
+
+        y = torch.ones(5)
+        print("==============")
+        print(y.device)     
+        y = y.to(device)                     #Deplace y du cpu au gpu
+        print(y.device)
+
+        z = y+x                             #Calculs plus rapides sur le cpu
+        z = z.to('cpu')                     #Deplace z au cpu pour pouvoir utiliser numpy
+
+        t = z.numpy()
+        print(t)
+
+    x = torch.ones(5, requires_grad=True)   #Paramètre bonus qui sera utiliser en cas d'optimisation en vue
+    print(x)
