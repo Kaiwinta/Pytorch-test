@@ -1,5 +1,9 @@
 import torch
-
+"""
+Backward calcule le gradient
+Avant chaque nouvelle étape l'on doit vider le gradient
+Et l'on peut éviter que le pc stocke nos gardient
+"""
 def premier_gradiant():
     x = torch.randn(3 , requires_grad=True)     #randn is like rand but with a different distribution of 0 and 1
     print(x)
@@ -57,4 +61,3 @@ def Reset():
 
         weight.grad.zero_()             #We reset it otherwiseit will be 3 then 6, then 9
 
-Reset()
