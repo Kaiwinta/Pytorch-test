@@ -1,5 +1,7 @@
 import torch
 
+#Initialisation
+
 #A tensor is a neested list with many dimention it can be more than 3
 
 x = torch.empty(2,3)            #Permet de créer un tensor en deux dimensiion avec toutes la valeurs vides
@@ -15,6 +17,8 @@ print(x.dtype)                  #Permet de voir le type
 print(x.size())                 #Permet d'avoir la taille  !Fonction
 print(x)                        #Permet d'afficher le tensor
 print("==================\n")
+
+#Basic operation
 
 x = torch.rand(2,2)
 y = torch.rand(2,2)
@@ -44,3 +48,4 @@ y.div_(x)                       #Divise par x et stocke dans y
                                 #Dans pytorch, si une fonction à un _ c'est que c'est une modification sur place
                                 #Exemple add_ modifie sur place
 
+#Slicing
