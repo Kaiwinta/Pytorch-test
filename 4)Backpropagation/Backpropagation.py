@@ -30,3 +30,24 @@ Le local grdient permettent de mieux obtenir le gradient final
 
 We want to minimize our loss
 """
+
+import torch
+
+x = torch.tensor(1.0)
+y = torch.tensor(2.0)
+
+w = torch.tensor(1.0, requires_grad=True)
+
+#Forward pass and compute loss
+y_hat = w * x
+loss = (y_hat - y)**2
+
+print(loss)
+
+
+#Backward path and gradient computation
+loss.backward()
+print(w.grad)
+
+###Update the weigth
+###next forward and backward pass to reduce the loss
