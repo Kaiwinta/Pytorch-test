@@ -1,45 +1,57 @@
 import torch
+import torch.nn as nn
 
-"""
-    Premier vraie IA
+#Design model (input, output size , froward pass)
+#2) construct loss and optimizer
+#3) Training Loop:
+#       -frward pass: compute prediction
+#       -backward pass: gradients
+#       -update weigths
 
-    w évolue au fur et à mesure en augmentant
-    Le loss lui diminue entre chaque learning
-    Et les résultats se rapproche donc plus au fur et à mesure
 
-    Là torch est utilisé donc on peu automatisé
-    L'on automatise uniquement le calcul de gradient actuellement
-"""
 
 #f = w* x
 #f = 2*x
 
-x = torch.tensor([1,2,3,4],dtype=torch.float32)
-y = torch.tensor([2,4,6,8],dtype=torch.float32)
+x = torch.tensor([[1],[2],[3],[4]],dtype=torch.float32)
+y = torch.tensor([[2],[4],[6],[8]],dtype=torch.float32)
 
-#On initialise un poid qui demandera un gradient
-w = torch.tensor(0.0, dtype=torch.float32 , requires_grad=True)
+TestTensor = torch.tensor  ([5],dtype = torch.float32)
 
-#Calculate model predictionf
-def frowward(x):
-    return w * x
+n_samples , n_features = x.shape
+print(n_samples , n_features)
 
-#Calculate loss =MSe 
-def loss(y, y_predicted):
-    return ((y_predicted-y)**2).mean()
+inpout_size = n_features
+output_size = n_features
+
+model = nn.Linear(inpout_size,output_size)
+
+"""class LinearRegression(nn.Module):
+
+    def __init__ (self, input_dim , output_dim):
+        super(LinearRegression,self).__init__()
+
+        #define layers
+        self.lin = nn.Linear(input_dim,output_dim)
+
+    def forward(self,x):
+        return self.lin(x)"""
 
 
 
-print(f'Prediction before training : f(5) = {frowward(5):.3f}')
+print(f'Prediction before training : f(5) = {model(TestTensor).item():.3f}')
 
 #Training
 learning_rate = 0.01
 #L'utilisation de backward demande plus d'iteration mais automatise le sclacul de gradient
-n_iters = 100
+n_iters = 1000
+
+loss = nn.MSELoss()
+optimizer = torch.optim.SGD(model.parameters(), lr =  learning_rate)
 
 for epoch in range(n_iters):
     #prediction(forward pass)
-    y_pred = frowward(x)
+    y_pred = model(x)
 
     #loss
     l = loss(y, y_pred)
@@ -48,13 +60,13 @@ for epoch in range(n_iters):
     l.backward()        #Calculate dl/dw automaticly
 
     #Update weight
-    with torch.no_grad():
-        w -= learning_rate * w.grad
+    optimizer.step()
     
     #zero gradient
-    w.grad.zero_()
+    optimizer.zero_grad()
 
-    if epoch % 10 == 0:
-        print(f'epoch {epoch+1}: w {w:.3f}, loss = {l:.8f}')
+    if epoch % 100 == 0:
+        [w, b ]=model.parameters()
+        print(f'epoch {epoch+1}: w {w[0][0].item():.3f}, loss = {l:.8f}')
 
-print(f'Prediction after training : f(5) = {frowward(5):.3f}')
+print(f'Prediction after training : f(5) = {model(TestTensor).item():.3f}')
