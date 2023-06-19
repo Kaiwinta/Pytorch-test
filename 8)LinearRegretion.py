@@ -5,6 +5,7 @@
 #       -backward pass: gradients
 #       -update weigths
 
+
 import torch
 import torch.nn as nn       #Stands for neural networks
 import numpy as np
