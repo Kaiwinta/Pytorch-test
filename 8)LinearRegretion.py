@@ -32,7 +32,7 @@ model = nn.Linear(input_size,output_size)
 
 #Loss and optimizer
 learning_rate = 0.01
-criterion = nn.MSELoss()
+criterion = nn.MSELoss()        #Un neural network fait pour ce calcul
 optimizer = torch.optim.SGD(model.parameters(),lr = learning_rate)
 
 
@@ -40,15 +40,15 @@ optimizer = torch.optim.SGD(model.parameters(),lr = learning_rate)
 num_epoch = 1000
 for epoch in range(num_epoch):
     #forward pass an d loss
-    y_predicted = model(X)
+    y_predicted = model(X)  
     loss = criterion(y_predicted,Y)
 
     #Bakcward pass
-    loss.backward()
+    loss.backward()     #Calcul des gradients
 
     #Update
     optimizer.step()
-    optimizer.zero_grad()
+    optimizer.zero_grad()   #Reset des gradiens
 
     if (epoch+1) %100 == 0:
         print(f"epoch : {epoch+1}, loss = {loss.item():.3f}")
