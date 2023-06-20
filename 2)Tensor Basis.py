@@ -125,6 +125,9 @@ def Numpy_to_Tensor():
 
         t = z.numpy()
         print(t)
-
+    else:
+        print('dead')
     x = torch.ones(5, requires_grad=True)   #Paramètre bonus qui sera utiliser en cas d'optimisation en vue
     print(x)
+
+Numpy_to_Tensor()
