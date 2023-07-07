@@ -4,7 +4,7 @@
 #       -frward pass: compute prediction
 #       -backward pass: gradients
 #       -update weigths
-
+ 
 
 import torch
 import torch.nn as nn       #Stands for neural networks
